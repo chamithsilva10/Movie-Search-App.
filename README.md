@@ -1,69 +1,57 @@
-To add a `README.md` file to your GitHub repository and push it to the `main` branch, follow these steps:
+Here's a **README.md** file you can add to your GitHub project to explain your **DirectOmdbApiClient** Kotlin class for accessing the OMDb API:
 
 ---
 
-### **Step 1: Create a `README.md` file locally**
-1. Navigate to your project folder:
-   ```bash
-   cd /Users/chamithshaminda/Desktop/w2083586/mobilw2ndcw/
-   ```
-2. Create the `README.md` file:
-   ```bash
-   touch README.md
-   ```
-3. Open the file in a text editor (e.g., VS Code, Nano, or Xcode) and add content:
-   ```bash
-   echo "# 2D Dice Game for Android" >> README.md
-   echo "A simple Android dice-rolling game built with Kotlin." >> README.md
-   ```
-   Or edit manually:
-   ```bash
-   nano README.md  # (Ctrl+X → Y → Enter to save)
-   ```
+# Movie Search App with OMDb API  
+**A Kotlin-based Android application for searching and retrieving movie details using the OMDb API.**  
 
----
+## 📌 Features  
+- Search movies by title  
+- Fetch detailed movie information (plot, actors, ratings, etc.)  
+- Supports pagination for browsing multiple results  
+- Uses `HttpURLConnection` for direct API calls  
+- Coroutines for asynchronous network operations  
+- JSON parsing to Kotlin `Movie` data class  
 
-### **Step 2: Commit the `README.md` file**
-1. Stage the file:
-   ```bash
-   git add README.md
-   ```
-2. Commit it:
-   ```bash
-   git commit -m "Add README.md"
+## 🔧 Setup  
+1. **Get an OMDb API Key**  
+   - Visit [OMDb API](http://www.omdbapi.com/apikey.aspx) and request a free API key.  
+   - Replace `Constants.OMDb_API_KEY` in your project with your actual key.  
+
+2. **Add Internet Permission**  
+   Ensure your `AndroidManifest.xml` includes:  
+   ```xml
+   <uses-permission android:name="android.permission.INTERNET" />
    ```
 
----
-
-### **Step 3: Push to GitHub (main branch)**
-```bash
-git push origin main
-```
-
----
-
-### **Step 4: Verify on GitHub**
-1. Go to your repo:  
-   [https://github.com/chamithsilva10/2D-Dice-Game-for-Android](https://github.com/chamithsilva10/2D-Dice-Game-for-Android)
-2. The `README.md` should now appear at the bottom of the repository page.
-
----
-
-
-Example:
-```markdown
-# 2D Dice Game for Android 🎲
-
-A simple Android dice-rolling game built with Kotlin.
-
-## Features
-- Roll two dice with a button tap
-- Simple animations
-- Score tracking
-
-## Installation
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/chamithsilva10/2D-Dice-Game-for-Android.git
+3. **Usage Example**  
+   ```kotlin
+   val apiClient = DirectOmdbApiClient()
+   
+   // Search movies by title (returns first 10 results)
+   val searchResults = apiClient.searchMovies("Inception")
+   
+   // Get detailed info by IMDb ID
+   val movieDetails = apiClient.getMovieById("tt1375666")
+   
+   // Parse JSON response to Movie object
+   val movie = apiClient.parseJSONToMovie(jsonResponse)
    ```
-2. Open in Android Studio and run!
+
+## 📂 Project Structure  
+- **`DirectOmdbApiClient.kt`** – Handles API requests and JSON parsing.  
+- **`Movie.kt`** – Data class for storing movie details.  
+- **`Constants.kt`** – Stores the API key and other constants.  
+
+## 🛠️ Dependencies  
+- Kotlin Coroutines (`kotlinx-coroutines-core`)  
+- Standard Android SDK  
+
+## 📝 Notes  
+- The app uses **manual JSON parsing** with `org.json.JSONObject` (no Retrofit/GSON).  
+- Network operations run on **background threads** via `Dispatchers.IO`.  
+- Errors are logged and returned as JSON strings with `"Error"` keys.  
+
+## 📄 License  
+This project is open-source under the **MIT License**.  
+
